@@ -1,73 +1,35 @@
-# Environment management
-python-dotenv==1.0.0
+# Core dependencies
+fastapi==0.100.0          # For building the REST API
+uvicorn==0.23.2           # ASGI server for running FastAPI
+python-dotenv==1.0.0      # For managing environment variables
+aiohttp==3.8.5            # For asynchronous HTTP requests
+pydantic==1.10.13         # For data validation and settings management
+langchain==0.0.232        # Main framework for chain-based LLM operations
+langchain-openai==0.0.6   # Integration with OpenAI models through LangChain
+langchain-nvidia-ai-endpoints==0.1.0  # NVIDIA AI Endpoints for embeddings and reranking
+typing-extensions==4.8.1  # For Python type hints and extensions
+pyyaml==6.0               # YAML parsing for configuration
+orjson==3.9.6             # Fast JSON parsing and handling
+jsonschema==4.19.0        # JSON schema validation
+docker==6.1.3             # Docker SDK for Python
+httpx==0.25.1             # For advanced HTTP requests (optional)
+loguru==0.7.0             # Enhanced logging
+diskcache==5.6.1          # Caching and persistence
+huggingface-hub==0.18.0   # For Hugging Face model management
+transformers==4.34.0      # For using transformers outside OpenAI/NVIDIA APIs
+nvidia-pyindex            # NVIDIA index for specific packages
 
-# Asynchronous HTTP client
-aiohttp==3.8.5
+# Testing dependencies
+pytest==7.5.2             # Testing framework
+pytest-asyncio==0.21.1    # Async support for pytest
+pytest-cov==4.1.0         # Test coverage reporting
+pytest-mock==3.11.1       # Mocking utilities for pytest
 
-# Data validation and settings management using Python type annotations
-pydantic==1.10.13
+# Development and code quality tools
+black==23.9.1             # Code formatter
+flake8==6.1.0             # Linting tool
+isort==5.12.0             # Import sorting tool
 
-# Core library for working with LangChain, a framework for LLM operations
-langchain==0.0.232
-
-# Integration with OpenAI models through LangChain
-langchain-openai==0.0.6
-
-# NVIDIA AI Endpoints for specialized embeddings and reranking models
-langchain-nvidia-ai-endpoints==0.1.0
-
-# ASGI server for serving FastAPI applications
-uvicorn==0.23.2
-
-# FastAPI for building APIs, if used in your project
-fastapi==0.100.0
-
-# Type extensions for newer Python typing capabilities
-typing-extensions==4.8.1
-
-# Additional utilities for structured outputs and parsing
-langchain-core==0.0.8  # Assumed core component for parsing and structured output
-
-# JSON and YAML parsing libraries for configurations
-pyyaml==6.0
-
-# Utilities for handling JSON in a more flexible way
-orjson==3.9.6
-
-# For handling specific JSON schema requirements, if needed
-jsonschema==4.19.0
-
-# Docker SDK for Python, if interacting with Docker programmatically
-docker==6.1.3
-
-# HTTPX for advanced HTTP requests (optional, replace aiohttp if preferred)
-httpx==0.25.1
-
-# Additional tools for managing long-running tasks and asynchronous processes
-asyncio==3.4.3
-
-# Logging configuration for better logging and debugging support
-loguru==0.7.0
-
-# Testing libraries for unit and integration testing
-pytest==7.5.2
-pytest-asyncio==0.21.1
-
-# Development tools
-black==23.9.1  # Code formatting
-flake8==6.1.0  # Linting
-isort==5.12.0  # Import sorting
-
-# Security and audit tools
-bandit==1.7.5  # Security linter
-safety==2.5.1  # Dependency vulnerability checks
-
-# Caching and persistence (if used for faster LLM responses)
-diskcache==5.6.1
-
-# Specific handling for AI model wrappers or custom integrations
-huggingface-hub==0.18.0  # For Hugging Face model management
-transformers==4.34.0  # For custom LLMs if used outside OpenAI/NVIDIA API
-
-# Dependencies specific to the NVIDIA stack if any additional packages are needed
-nvidia-pyindex  # NVIDIA specific index for their custom packages
+# Security and auditing tools
+bandit==1.7.5             # Security linter
+safety==2.5.1             # Dependency vulnerability checks

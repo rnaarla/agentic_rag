@@ -10,6 +10,8 @@ This project implements a multi-agent Retrieval-Augmented Generation (RAG) workf
 - [Configuration](#configuration)
 - [Code Structure](#code-structure)
 - [Testing](#testing)
+- [Docker Setup](#docker-setup)
+- [Prometheus and Grafana Integration](#prometheus-and-grafana-integration)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -79,3 +81,79 @@ The workflow is designed to process documents by:
 - **Run Tests:**
 	```bash
 	pytest tests/
+
+## Docker Setup
+- **Building and Running with Docker**
+1. **Build the Docker Image**
+	```Bash
+	docker build -t my-rag-app .
+	Run the Docker Container
+	docker run --env-file .env -p 8000:8000 my-rag-app
+
+**Using Docker Compose**
+If you prefer using Docker Compose, run:
+	```Bash
+	docker-compose up --build
+
+
+- **Docker Compose Configuration**
+Ensure your docker-compose.yml includes the application and optionally NGINX for handling SSL/TLS:
+	```yaml
+	version: '3.8'
+
+	services:
+	app:
+		build:
+		context: .
+		dockerfile: Dockerfile
+		environment:
+		- LOCAL_EMBEDDINGS_URL=${LOCAL_EMBEDDINGS_URL}
+		- LLM_API_URL=${LLM_API_URL}
+		- API_KEY=${API_KEY}
+		volumes:
+		- .:/app
+		expose:
+		- "8000"
+
+	nginx:
+		image: nginx:latest
+		ports:
+		- "80:80"
+		- "443:443"
+		volumes:
+		- ./nginx.conf:/etc/nginx/nginx.conf
+		depends_on:
+		- app
+
+## Prometheus and Grafana Integration**
+- **Monitoring with Prometheus and Grafana**
+1. **Set Up Prometheus: Create a prometheus.yml configuration file:**
+	```yaml
+	global:
+	scrape_interval: 15s
+
+	scrape_configs:
+	- job_name: 'api'
+		static_configs:
+		- targets: ['app:8000']  # Assuming Uvicorn exposes metrics at /metrics
+
+2. **Include Prometheus and Grafana in Docker Compose**
+	```yaml
+	prometheus:
+	image: prom/prometheus:latest
+	volumes:
+		- ./prometheus.yml:/etc/prometheus/prometheus.yml
+	ports:
+		- "9090:9090"
+
+	grafana:
+	image: grafana/grafana:latest
+	ports:
+		- "3000:3000"
+	environment:
+		- GF_SECURITY_ADMIN_PASSWORD=admin  # Set your Grafana admin password
+	depends_on:
+		- prometheus
+
+Access Grafana
+Visit http://localhost:3000 and log in with the default username (admin) and password (admin). Add Prometheus as a data source and create dashboards to monitor your application's metrics.
