@@ -1,38 +1,39 @@
-// .devcontainer/devcontainer.json
 {
   "name": "Agentic RAG Development Container",
   "build": {
-    "dockerfile": "Dockerfile",  // Reference to your Dockerfile
-    "context": ".."  // Build context set to the project root
+    "dockerfile": "Dockerfile",  // Reference to your Dockerfile in the project root
+    "context": ".."  // Set the build context to the project root
   },
   "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "editor.formatOnSave": true,
-    "python.pythonPath": "/usr/local/bin/python",
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--max-line-length=88"],
-    "python.analysis.typeCheckingMode": "basic"
+    "terminal.integrated.defaultProfile.linux": "bash",  // Use bash as the default terminal
+    "editor.formatOnSave": true,  // Automatically format code on save
+    "python.pythonPath": "/usr/local/bin/python",  // Specify the path to Python inside the container
+    "python.linting.enabled": true,  // Enable linting for Python files
+    "python.linting.flake8Enabled": true,  // Use Flake8 for linting
+    "python.linting.flake8Args": ["--max-line-length=88"],  // Set max line length for Flake8
+    "python.analysis.typeCheckingMode": "basic"  // Basic type checking with Pylance
   },
   "extensions": [
-    "ms-python.python",
-    "ms-python.vscode-pylance",
-    "ms-toolsai.jupyter",
-    "ms-azuretools.vscode-docker",
-    "ms-vscode-remote.remote-containers",
-    "eamodio.gitlens",
-    "esbenp.prettier-vscode"
+    "ms-python.python",  // Python extension for VS Code
+    "ms-python.vscode-pylance",  // Pylance for enhanced IntelliSense
+    "ms-toolsai.jupyter",  // Jupyter support for running notebooks
+    "ms-azuretools.vscode-docker",  // Docker extension for managing containers
+    "ms-vscode-remote.remote-containers",  // Remote Containers extension
+    "eamodio.gitlens",  // GitLens for enhanced Git capabilities
+    "esbenp.prettier-vscode",  // Prettier for code formatting
+    "redhat.vscode-yaml",  // YAML support for better handling of YAML files
+    "ms-vscode.live-server"  // Live Server for serving static files
   ],
-  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
+  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",  // Install dependencies after container creation
   "forwardPorts": [
-    8000,
-    3000,
-    9090
+    8000,  // Port for FastAPI
+    3000,  // Port for Grafana
+    9090   // Port for Prometheus
   ],
-  "remoteUser": "vscode",
+  "remoteUser": "vscode",  // Run as the vscode user for better compatibility
   "features": {
     "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.10"
+      "version": "3.10"  // Ensure Python 3.10 is installed in the container
     }
   },
   "portsAttributes": {
@@ -47,6 +48,34 @@
     "9090": {
       "label": "Prometheus",
       "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.testing.pytestEnabled": true,  // Enable pytest as the testing framework
+        "python.testing.pytestArgs": ["tests"],  // Set the tests directory for pytest
+        "python.testing.unittestEnabled": false,  // Disable unittest if using pytest
+        "python.linting.pylintEnabled": false  // Disable pylint if using flake8
+      },
+      "launch": {
+        "configurations": [
+          {
+            "name": "Python: FastAPI",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+              "api:app",
+              "--host",
+              "0.0.0.0",
+              "--port",
+              "8000"
+            ],
+            "jinja": true
+          }
+        ]
+      }
     }
   }
 }
