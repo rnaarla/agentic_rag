@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - LOCAL_EMBEDDINGS_URL=${LOCAL_EMBEDDINGS_URL}
+      - LLM_API_URL=${LLM_API_URL}
+      - API_KEY=${API_KEY}
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"  # Adjust if your app requires specific ports
+    depends_on:
+      - database  # Example if there's a database service
+    command: python main.py
+
+  # Example of another service (e.g., database)
+  database:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
