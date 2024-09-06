@@ -1,53 +1,52 @@
-
+// .devcontainer/devcontainer.json
 {
-    "name": "Agentic RAG Development Container",
-    "build": {
-      "dockerfile": "Dockerfile",  // Reference to the Dockerfile in the project root
-      "context": ".."  // Context set to the project root
+  "name": "Agentic RAG Development Container",
+  "build": {
+    "dockerfile": "Dockerfile",  // Reference to your Dockerfile
+    "context": ".."  // Build context set to the project root
+  },
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "editor.formatOnSave": true,
+    "python.pythonPath": "/usr/local/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": ["--max-line-length=88"],
+    "python.analysis.typeCheckingMode": "basic"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode"
+  ],
+  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
+  "forwardPorts": [
+    8000,
+    3000,
+    9090
+  ],
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    }
+  },
+  "portsAttributes": {
+    "8000": {
+      "label": "FastAPI",
+      "onAutoForward": "notify"
     },
-    "settings": {
-      "terminal.integrated.defaultProfile.linux": "bash",  // Use bash as the default terminal
-      "editor.formatOnSave": true,  // Automatically format code on save
-      "python.pythonPath": "/usr/local/bin/python",  // Specify the path to Python inside the container
-      "python.linting.enabled": true,  // Enable linting for Python files
-      "python.linting.flake8Enabled": true,  // Use Flake8 for linting
-      "python.linting.flake8Args": ["--max-line-length=88"],  // Set max line length for Flake8
-      "python.analysis.typeCheckingMode": "basic"  // Basic type checking with Pylance
+    "3000": {
+      "label": "Grafana",
+      "onAutoForward": "notify"
     },
-    "extensions": [
-      "ms-python.python",  // Python extension for VS Code
-      "ms-python.vscode-pylance",  // Pylance for enhanced IntelliSense
-      "ms-toolsai.jupyter",  // Jupyter support for running notebooks
-      "ms-azuretools.vscode-docker",  // Docker extension for managing containers
-      "ms-vscode-remote.remote-containers",  // Remote Containers extension
-      "eamodio.gitlens",  // GitLens for enhanced Git capabilities
-      "esbenp.prettier-vscode"  // Prettier for code formatting
-    ],
-    "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",  // Install dependencies after container creation
-    "forwardPorts": [
-      8000,  // Port for FastAPI
-      3000,  // Port for Grafana
-      9090   // Port for Prometheus
-    ],
-    "remoteUser": "vscode",  // Run as the vscode user for better compatibility
-    "features": {
-      "ghcr.io/devcontainers/features/python:1": {
-        "version": "3.10"  // Ensure Python 3.10 is installed in the container
-      }
-    },
-    "portsAttributes": {
-      "8000": {
-        "label": "FastAPI",
-        "onAutoForward": "notify"
-      },
-      "3000": {
-        "label": "Grafana",
-        "onAutoForward": "notify"
-      },
-      "9090": {
-        "label": "Prometheus",
-        "onAutoForward": "notify"
-      }
+    "9090": {
+      "label": "Prometheus",
+      "onAutoForward": "notify"
     }
   }
-  
+}
