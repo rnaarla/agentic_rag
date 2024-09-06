@@ -68,36 +68,26 @@ The workflow is designed to process documents by:
 - **Chunking and Splitting:** Adjust the chunk size and overlap in config.py as per the dataset's requirements.
 
 ## Project Directory Structure
-project-root/
-│
-├── .devcontainer/
-│   ├── devcontainer.json        # Configuration for GitHub Codespaces and VS Code Remote - Containers
-│   └── Dockerfile               # Custom Dockerfile for the dev container
-│
-├── tests/                       # Directory containing all test files
-│   ├── __init__.py              # Marks the tests directory as a package
-│   ├── conftest.py              # Common fixtures for tests
-│   ├── test_api.py              # Tests for the API endpoints
-│   ├── test_models.py           # Unit tests for the models
-│   ├── test_utils.py            # Unit tests for utility functions
-│   └── test_workflow.py         # Integration tests for the workflow
-│
-├── .dockerignore                # Excludes unnecessary files from Docker builds
-├── .env                         # Environment variables for sensitive data
-├── .gitignore                   # Excludes unnecessary files from Git commits
-├── api.py                       # Main FastAPI application file
-├── config.py                    # Configuration settings and constants
-├── docker-compose.yml           # Docker Compose configuration for multi-service setups
-├── gunicorn_conf.py             # Configuration for running Gunicorn with Uvicorn workers
-├── main.py                      # Entry point for running the multi-agent RAG workflow
-├── models.py                    # Functions for initializing models and related tasks
-├── nginx.conf                   # NGINX configuration for SSL/TLS and reverse proxy setup
-├── prometheus.yml               # Prometheus configuration for monitoring
-├── README.md                    # Detailed instructions and documentation for the project
-├── requirements.txt             # List of Python dependencies
-├── retrievers.py                # Setup and configuration of hybrid retrieval models
-├── utils.py                     # Utility functions for various tasks
-└── workflow.py                  # Definition of the LangGraph-based multi-agent workflow
+**.devcontainer/:** Configuration for GitHub Codespaces and VS Code Remote - Containers
+**tests/:** Directory containing all test files
+- **.dockerignore, .env, .gitignore:** Configuration files for Docker, environment variables, and Git commits
+- **api.py, config.py, main.py, models.py, retrievers.py, utils.py, workflow.py:** Main application files
+- **docker-compose.yml, gunicorn_conf.py, nginx.conf, prometheus.yml:** Configuration files for Docker Compose, Gunicorn, NGINX, and Prometheus
+- **requirements.txt:** List of Python dependencies
+
+**Setup and Installation**
+Clone the repository and navigate to the project root
+Create a .env file with sensitive data and environment variables
+Run docker-compose up --build to start the multi-service setup
+Access the API endpoints, Prometheus, and Grafana using the respective ports
+
+**Testing**
+Run pytest in the terminal to execute all tests
+Tests are located in the tests/ directory and cover API endpoints, models, utility functions, and the workflow
+**Configuration**
+config.py: Configuration settings and constants
+prometheus.yml: Prometheus configuration for monitoring
+nginx.conf: NGINX configuration for SSL/TLS and reverse proxy setup
 
 
 ## Testing
@@ -106,7 +96,6 @@ project-root/
 - **Run Tests:**
 	```bash
 	pytest tests/
-
 ## Docker Setup
 - **Building and Running with Docker**
 1. **Build the Docker Image**
@@ -114,7 +103,6 @@ project-root/
 	docker build -t my-rag-app .
 	Run the Docker Container
 	docker run --env-file .env -p 8000:8000 my-rag-app
-
 **Using Docker Compose**
 If you prefer using Docker Compose, run:
 	```Bash
