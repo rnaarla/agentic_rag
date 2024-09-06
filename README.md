@@ -67,13 +67,38 @@ The workflow is designed to process documents by:
 - **Logging:** Configurable logging settings are available in utils.py.
 - **Chunking and Splitting:** Adjust the chunk size and overlap in config.py as per the dataset's requirements.
 
-## Code Structure
-- **config.py:** Contains configuration constants and environment variable setups.
-- **utils.py:** Utility functions for downloading datasets and processing documents.
-- **models.py:** Functions for initializing embedding, reranking, and LLM models.
-- **retrievers.py:** Setup and configuration of hybrid retrieval models.
-- **workflow.py:** Defines the LangGraph-based multi-agent workflow.
-- **main.py:** Orchestrates the entire workflow execution.
+## Project Directory Structure
+project-root/
+│
+├── .devcontainer/
+│   ├── devcontainer.json        # Configuration for GitHub Codespaces and VS Code Remote - Containers
+│   └── Dockerfile               # Custom Dockerfile for the dev container
+│
+├── tests/                       # Directory containing all test files
+│   ├── __init__.py              # Marks the tests directory as a package
+│   ├── conftest.py              # Common fixtures for tests
+│   ├── test_api.py              # Tests for the API endpoints
+│   ├── test_models.py           # Unit tests for the models
+│   ├── test_utils.py            # Unit tests for utility functions
+│   └── test_workflow.py         # Integration tests for the workflow
+│
+├── .dockerignore                # Excludes unnecessary files from Docker builds
+├── .env                         # Environment variables for sensitive data
+├── .gitignore                   # Excludes unnecessary files from Git commits
+├── api.py                       # Main FastAPI application file
+├── config.py                    # Configuration settings and constants
+├── docker-compose.yml           # Docker Compose configuration for multi-service setups
+├── gunicorn_conf.py             # Configuration for running Gunicorn with Uvicorn workers
+├── main.py                      # Entry point for running the multi-agent RAG workflow
+├── models.py                    # Functions for initializing models and related tasks
+├── nginx.conf                   # NGINX configuration for SSL/TLS and reverse proxy setup
+├── prometheus.yml               # Prometheus configuration for monitoring
+├── README.md                    # Detailed instructions and documentation for the project
+├── requirements.txt             # List of Python dependencies
+├── retrievers.py                # Setup and configuration of hybrid retrieval models
+├── utils.py                     # Utility functions for various tasks
+└── workflow.py                  # Definition of the LangGraph-based multi-agent workflow
+
 
 ## Testing
 - **Unit Tests:** Write unit tests for individual functions using pytest.
